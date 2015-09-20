@@ -1,0 +1,17 @@
+Fixes to do
+-------
+-Does KillCurrentData button actually kill all of the current data including fit waves
+-Add check to Renamecurrentwave to abort if new name already exists
+-Location of AutoScale button on ConMatNMRPRo main panel
+
+Additions to make
+-------
+-Appendopopup currently does not function
+-Add Macro to Unload ConMatNMRPro
+-Add nutation, rep sweep, ect. to experiment types
+-Add experiment type variable to distinguish multiple types of expts. 
+-Make a more advanced time wave generator to acommodate Tecmag and use many of the Magres
+      features.
+-Make a new folder to store raw data waves instead of root, perhaps make a folder 
+     to switch between each experiment and make less clutter
+-Change root:analysis: folder to root:ConMatNMRPro:
