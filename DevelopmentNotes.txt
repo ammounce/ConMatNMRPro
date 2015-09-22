@@ -15,7 +15,8 @@ Additions to make
 -AMM: Make a more advanced time wave generator to acommodate Tecmag and use many of the Magres
       features.
 -AMM: change gyromagnetic ratio label to gamma/2pi and add use gyro checkbox      
-      
+-AMM: Check box to ask for empty parameters
+
 Possible Changes
 ----------------
 -AMM: Make a new folder to store raw data waves instead of root, perhaps make a folder 
