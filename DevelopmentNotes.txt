@@ -14,6 +14,7 @@ Additions to make
 -AMM:Add button to view storage wave alongside description of variable
 -AMM: Make a more advanced time wave generator to acommodate Tecmag and use many of the Magres
       features.
+-AMM: change gyromagnetic ratio label to gamma/2pi and add use gyro checkbox      
       
 Possible Changes
 ----------------
