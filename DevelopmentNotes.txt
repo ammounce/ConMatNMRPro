@@ -16,6 +16,7 @@ Additions to make
       features.
 -AMM: change gyromagnetic ratio label to gamma/2pi and add use gyro checkbox      
 -AMM: Check box to ask for empty parameters
+-AMM: Add buttons to show T1 storage and moment storage waves
 
 Possible Changes
 ----------------
