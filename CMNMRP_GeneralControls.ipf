@@ -1,8 +1,226 @@
 #pragma rtGlobals=1		// Use modern global access method and strict wave access.
 
-//9/15/2015
+//9/15/2015 AMM
 // Removed g-variables from SetStats
 // Removed g-variables from DataManipulationCheckbox
+//9/20/2015 AMM
+//Started ConMatNMRProTabControl to make tab controls for the Main Analysis Window
+
+Function ConMatNMRProTabControl(tca) : TabControl
+	STRUCT WMTabControlAction &tca
+
+	STRUCT NMRData expt; initexpt(expt)
+
+	print tca.tab, expt.previoustab
+	if(tca.tab!=expt.previoustab)
+		if(expt.previoustab==0)
+			KillWindow ConMatNMRPro#DataTab
+		elseif(expt.previoustab==1)
+			KillWindow ConMatNMRPro#T1tab
+		elseif(expt.previoustab==2)
+			Killwindow ConMatNMRPro#FFTIntTab
+		endif
+				
+		if(tca.tab==0)
+			DataTabMaster()
+		elseif(tca.tab==1)
+			T1TabMaster()
+		elseif(tca.tab==2)
+			FFTIntTabMAster()
+		endif	
+	endif
+	
+	expt.previoustab=tca.tab
+End
+
+	if(tca.tab!=expt.previoustab)
+		if(expt.previoustab==0)
+			KillWindow ConMatNMRPro#RawDataTabPanel
+		elseif(expt.previoustab==1)
+			KillWindow ConMatNMRPro#T1tabPanel
+		elseif(expt.previoustab==2)
+			Killwindow ConMatNMRPro#FFTIntTabPanel
+		endif
+		
+		if(tca.tab==0)
+			RawDataTabPanelMaster()
+		elseif(tca.tab==1)
+			T1TabMaster()
+		elseif(tca.tab==2)
+			FFTIntTabMaster()
+		endif
+	endif
+	
+	expt.previoustab=tca.tab
+
+end
+	//Raw Data Controls
+	//Experiment Parameters
+	ValDisplay valdispScan1D,disable=(tca.tab!=0)
+	ValDisplay valdispgpoints2D,disable=(tca.tab!=0)
+	SetVariable setvargsamplerate,disable=(tca.tab!=0)
+	SetVariable setvargbuffer,disable=(tca.tab!=0)
+	SetVariable setvargw0,disable=(tca.tab!=0)
+	SetVariable setvardW,disable=(tca.tab!=0)
+	ValDisplay valdispgw,disable=(tca.tab!=0)
+	SetVariable setvargH0,disable=(tca.tab!=0)
+	SetVariable setvargdH,disable=(tca.tab!=0)
+	ValDisplay valdispgH,disable=(tca.tab!=0)
+
+	//Experiment types
+	
+	CheckBox checkgfieldsweep,disable=(tca.tab!=0)
+	CheckBox checkgfrequencysweep,disable=(tca.tab!=0)
+	CheckBox checkgT1measure,disable=(tca.tab!=0)
+	
+	//Current to Field Transofrmations LANL
+
+	SetVariable setvarSystem2I,disable=(tca.tab!=0)
+	SetVariable setvargSystem2dI,disable=(tca.tab!=0)
+	SetVariable setvarDilFrI,disable=(tca.tab!=0)
+	SetVariable setvarDilFrdI,disable=(tca.tab!=0)
+	
+	//Time Data Manipulation
+	
+	CheckBox checkgbaseline,disable=(tca.tab!=0)
+	ValDisplay valdispayBaselinestart,disable=(tca.tab!=0)
+	ValDisplay valdispayBaselineend,disable=(tca.tab!=0)
+	Button buttonsetBaseline,disable=(tca.tab!=0)
+
+	CheckBox checkgwindow,disable=(tca.tab!=0)
+	ValDisplay valdispayWindowStart,disable=(tca.tab!=0)
+	ValDisplay valdispayWindowEnd,disable=(tca.tab!=0)
+	Button buttonsetWindow,disable=(tca.tab!=0)
+	
+	CheckBox checkgfilter,disable=(tca.tab!=0)
+	SetVariable setvarfilterfreq,disable=(tca.tab!=0)
+	
+	CheckBox checkgtphasecorrect,disable=(tca.tab!=0)
+	SetVariable setvargtphase,disable=(tca.tab!=0)
+	CheckBox checkgscanphase,disable=(tca.tab!=0)
+	Button buttonautotphasecorrect,disable=(tca.tab!=0)
+
+	//Frequency Data Manipulation
+
+	CheckBox checkgfphasecorrect,disable=(tca.tab!=0)
+	CheckBox checkgautophase1,disable=(tca.tab!=0)
+	SetVariable setvargtphase1,disable=(tca.tab!=0)
+	SetVariable setvargtphase2,disable=(tca.tab!=0)
+	Button buttonautotphasecorrect1,disable=(tca.tab!=0)
+
+	//Integration and FFT
+
+	CheckBox checkgintreal,disable=(tca.tab!=0)
+	CheckBox checkgintimag,disable=(tca.tab!=0)
+	CheckBox checkgintmag,disable=(tca.tab!=0)
+	Button buttonIntimedomain,disable=(tca.tab!=0)
+	Button ButtonRevertData,disable=(tca.tab!=0)
+	
+	CheckBox checkgintreal1,disable=(tca.tab!=0)
+	CheckBox checkgintimag1,disable=(tca.tab!=0)
+	CheckBox checkgintmag1,disable=(tca.tab!=0)
+	Button buttonInfreqdomain,disable=(tca.tab!=0)
+
+	Button buttonFFTsum,disable=(tca.tab!=0)
+	SetVariable setvarggryo,disable=(tca.tab!=0)
+	Button buttonAutoscaleFFT,disable=(tca.tab!=0)
+
+	////////////////////
+	//T1 Controls////////
+	////////////////////
+	
+	//Time wave
+	
+	SetVariable setvargtstart,disable=(tca.tab!=1)
+	SetVariable setvargtend,disable=(tca.tab!=1)
+	SetVariable setvargtoffset,disable=(tca.tab!=1)
+	Button buttonMaketimewave,disable=(tca.tab!=1)
+	
+	//Spin for fit
+	PopupMenu popupgspin,disable=(tca.tab!=1)
+	SetVariable setvargrecoveries,disable=(tca.tab!=1)
+	PopupMenu popupgtransition,disable=(tca.tab!=1)
+	PopupMenu popupgNQR,disable=(tca.tab!=1)
+	CheckBox checkgstretched,disable=(tca.tab!=1)		
+	TitleBox titlespin,disable=(tca.tab!=1)
+	
+	//Guess T1
+	SetVariable setvargMguess,disable=(tca.tab!=1)
+	SetVariable setvargT1guess,disable=(tca.tab!=1)
+	SetVariable setvargMinfM0guess,disable=(tca.tab!=1)
+	SetVariable setvargexponentguess,disable=(tca.tab!=1)
+	
+	Button buttonCursorguess,disable=(tca.tab!=1)
+	SetVariable setvargrecoveriesguessindex,disable=(tca.tab!=1)
+		
+	//FitT1
+	
+	Button buttonFitT1,disable=(tca.tab!=1)
+	SetVariable setvargrecoveriesindex,disable=(tca.tab!=1)
+	
+	ValDisplay valdispgM,disable=(tca.tab!=1)
+	ValDisplay valdispgMerror,disable=(tca.tab!=1)
+	
+	ValDisplay valdispgT1,disable=(tca.tab!=1)
+	ValDisplay valdispgT1error,disable=(tca.tab!=1)
+
+	ValDisplay valdispgtip,disable=(tca.tab!=1)
+	ValDisplay valdispgtiperror,disable=(tca.tab!=1)
+	
+	ValDisplay valdispgexpfit,disable=(tca.tab!=1)
+	ValDisplay valdispgexpfiterror,disable=(tca.tab!=1)
+	
+		//Store Data
+//	Button buttonStoragewaveName,disable=(tca.tab!=1)
+//	TitleBox title0,disable=(tca.tab!=1)
+//	SetVariable setvargindex,disable=(tca.tab!=1)
+//	SetVariable setvargindexparameter,disable=(tca.tab!=1)
+//	Button buttonStoreData,pos={191,514},disable=(tca.tab!=1)
+
+	
+	//Graphs Control
+	
+	KillWindow ConMAtNMRPro#G0	
+	if(expt.previoustab==0)
+		KillWindow ConMatNMRPro#G1
+	endif
+	
+	if(tca.tab==0)
+		Display/W=(171,146,709,536)/HOST=#  root:analysis:system:Zchan,root:analysis:system:Bchan,root:analysis:system:Achan
+		setactivesubwindow #
+		ModifyGraph rgb(Zchan)=(0,0,0),rgb(Bchan)=(1,12815,52428)
+		Label bottom "Time (us)"
+		Cursor/P A Achan 56;Cursor/P B Zchan 210
+		RenameWindow #,G0
+		SetActiveSubwindow ##
+		
+		if(expt.previoustab!=0)
+			Display/W=(721,146,1220,536)/HOST=#  root:analysis:system:FFTZchan,root:analysis:system:FFTBchan,root:analysis:system:FFTAchan
+			ModifyGraph rgb(FFTZchan)=(0,0,0),rgb(FFTBchan)=(1,12815,52428)
+			Label bottom "Frequency (MHz)"
+			Cursor/P A FFTZchan 496;Cursor/P B FFTZchan 524
+			RenameWindow #,G1
+			SetActiveSubwindow ##	
+		endif
+	elseif(tca.tab==1)
+		Display/W=(171,146,709,536)/HOST=#  root:analysis:system:M vs root:analysis:system:timewave
+		AppendToGraph root:analysis:system:fit_M vs root:analysis:system:timewave
+		ModifyGraph mode(M)=3
+		ModifyGraph marker(M)=19
+		ModifyGraph log(bottom)=1
+		Label bottom "Time (s)"
+		Label left "M (a.u.)"
+		Cursor/P A M 15;Cursor/P B M 7
+		RenameWindow #,G0
+	elseif(tca.tab==2)
+		Display/W=(171,146,709,536)/HOST=# root:analysis:system:fftsumwave//,FIguessfit,fit_fftsumwave
+		ModifyGraph log(bottom)=1
+		RenameWindow #,G0
+	endif
+
+	expt.previoustab=tca.tab
+
+End
 
 
 	

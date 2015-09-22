@@ -3,7 +3,8 @@
 
 //This procedure file contains the Structure format and initialization function which is called by all other procedures
 
-
+// 9/20/2015 AMM
+// Added previoustab to better control graph windows in tabs
 
 Structure NMRdata
 	
@@ -29,6 +30,9 @@ Structure NMRdata
 	//Time table
 	NVAR tpoints, tdecimal, ttecmag, tmapping
 	wave/t texttwave
+	
+	//General Variables
+	NVAR previoustab
 	
 	string FIfitname
 	SVAR filename, statwavename, nqrstring
@@ -153,6 +157,9 @@ Function InitExpt(s)
 	NVAR s.ttecmag=root:analysis:system:gttecmag
 	NVAR s.tmapping=root:analysis:system:gtmapping
 	wave/t s.texttwave=root:analysis:system:texttwave
+
+	//GeneralVariables
+	NVAR s.previoustab=root:analysis:system:gprevioustab
 
 
 	//string/g gFIfitname
