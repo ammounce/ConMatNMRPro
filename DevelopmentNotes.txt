@@ -1,17 +1,26 @@
 Fixes to do
 -------
--Does KillCurrentData button actually kill all of the current data including fit waves
--Add check to Renamecurrentwave to abort if new name already exists
--Location of AutoScale button on ConMatNMRPRo main panel
+-AMM: Does KillCurrentData button actually kill all of the current data including fit waves
+-AMM: Add check to Renamecurrentwave to abort if new name already exists
+-AMM: Location of AutoScale button on ConMatNMRPRo main panel
 
 Additions to make
 -------
--Appendopopup currently does not function
--Add Macro to Unload ConMatNMRPro
--Add nutation, rep sweep, ect. to experiment types
--Add experiment type variable to distinguish multiple types of expts. 
--Make a more advanced time wave generator to acommodate Tecmag and use many of the Magres
+-AMM: Appendopopup currently does not function
+-AMM: Add Macro to Unload ConMatNMRPro
+-AMM: Add nutation, rep sweep, ect. to experiment types
+-AMM: Add experiment type variable to distinguish multiple types of expts. 
+-AMM:Add temperature variable and storage space in statswave
+-AMM:Add button to view storage wave alongside description of variable
+-AMM: Make a more advanced time wave generator to acommodate Tecmag and use many of the Magres
       features.
--Make a new folder to store raw data waves instead of root, perhaps make a folder 
+-AMM: change gyromagnetic ratio label to gamma/2pi and add use gyro checkbox      
+-AMM: Check box to ask for empty parameters
+-AMM: Add buttons to show T1 storage and moment storage waves
+
+Possible Changes
+----------------
+-AMM: Make a new folder to store raw data waves instead of root, perhaps make a folder 
      to switch between each experiment and make less clutter
--Change root:analysis: folder to root:ConMatNMRPro:
+-AMM: Change root:analysis: folder to root:ConMatNMRPro:
+-AMM: Change main panel to a panel for all analysis with tabs to switch between screens
