@@ -793,8 +793,8 @@ Function T1TabMaster()
 	TitleBox title0,variable= root:analysis:system:gfilename
 	PopupMenu popupseclectwave,pos={x,y+30},size={231,20},proc=loadspectrum,title="Select Wave", disable=0
 	PopupMenu popupseclectwave,mode=3,popvalue="",value= #"ListofWavesinFolder()"
-	PopupMenu popuploadfile,pos={x,y+55},size={148,20},proc=LoadFile,title="Load File", disable=0
-	PopupMenu popuploadfile,mode=1,popvalue="Tecmag (.tnt)",value= #"\"Tecmag (.tnt);Tecmag Field Sweep (.txt folder);Magres2000 (.mr2)\""
+	//PopupMenu popuploadfile,pos={x,y+55},size={148,20},proc=LoadFile,title="Load File", disable=0
+	//PopupMenu popuploadfile,mode=1,popvalue="Tecmag (.tnt)",value= #"\"Tecmag (.tnt);Tecmag Field Sweep (.txt folder);Magres2000 (.mr2)\""
 
 	//Time wave
 	
@@ -935,6 +935,55 @@ Function FFTIntTabMaster()
 	Renamewindow #,FFTIntTab
 	
 	SetActiveSubwindow	 ConMatNMRPro#FFTIntTab
+
+	variable x, y	
+		
+	//Select Data
+	
+	x=380;y=25
+	
+	TitleBox title0,pos={x+70,y},size={117,20}, disable=0
+	TitleBox title0,variable= root:analysis:system:gfilename
+	PopupMenu popupseclectwave,pos={x,y+30},size={231,20},proc=loadspectrum,title="Select Wave", disable=0
+	PopupMenu popupseclectwave,mode=3,popvalue="",value= #"ListofWavesinFolder()"
+
+	//Moment Panel
+	
+	NewPanel/W=(50, 570, 400, 720)/Host=##
+	
+	x=10;y=10
+	
+	Button buttonCalculateMoments,pos={x,y},size={130,20},proc=CalculateMomentsButton,title="Calculate Moments"
+	ValDisplay valdispgmoment0,pos={x, y+25},size={120,13},title="0th moment"
+	ValDisplay valdispgmoment0,limits={0,0,0},barmisc={0,1000}	
+	ValDisplay valdispgmoment1,pos={x, y+45},size={120,13},title="1st moment"
+	ValDisplay valdispgmoment1,limits={0,0,0},barmisc={0,1000}
+	ValDisplay valdispgmoment1,value= #"root:analysis:system:gmoment1"
+	ValDisplay valdispgmoment2,pos={x, y+65},size={120,13},title="2nd moment"
+	ValDisplay valdispgmoment2,limits={0,0,0},barmisc={0,1000}
+	ValDisplay valdispgmoment2,value= #"root:analysis:system:gmoment2"
+	ValDisplay valdispgmoment3,pos={x, y+85},size={120,13},title="3rd moment"
+	ValDisplay valdispgmoment3,limits={0,0,0},barmisc={0,1000}
+	ValDisplay valdispgmoment3,value= #"root:analysis:system:gmoment3"
+
+	PopupMenu popupmomentstorage,pos={x+150,y},size={186,20},proc=MomentstoragePopup,title="StorageWave"
+	PopupMenu popupmomentstorage,mode=1, popvalue="Momentvs", value= #"ListofMomentvsWavesinFolder()"
+	
+	TitleBox title0,pos={x+150,y+25},size={9,9}
+	TitleBox title0,variable= root:analysis:system:gmomentstoragewavename
+	SetVariable setvargmomindex,pos={x+150,y+50},size={65,15},title="Index"
+	SetVariable setvargmomindex,value= root:analysis:system:gmomentindex
+	SetVariable setvargmomindexparam,pos={x+150,y+75},size={90,15},title="Param."
+	SetVariable setvargmomindexparam,value= root:analysis:system:gmomentindexparameter
+	Button buttonStoreMoments,pos={x+150,y+100},size={130,20},proc=StoreMomParameters,title="Store Mom. Param."
+
+
+
+	//Graph
+
+	Display/W=(175,140,710,540)/HOST=ConMatNMRPro#FFTIntTab  root:analysis:system:fftsumwave
+	Label left "Intensity (a.u.)"
+	Label bottom "Field (T)"
 
 	//expt.previoustab=2
 

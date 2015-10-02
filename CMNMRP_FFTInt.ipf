@@ -4,10 +4,15 @@ Window integralFFTSUMpanel() : Panel
 	PauseUpdate; Silent 1		// building window...
 	NewPanel /W=(303,216,1023,855)
 	ShowInfo/W=integralFFTSUMpanel
+	
+	
 	PopupMenu popselectwave,pos={243,50},size={221,20},proc=loadspectrum,title="Select Wave"
 	PopupMenu popselectwave,mode=1,popvalue="",value= #"ListofWavesinFolder()"
 	TitleBox displayfilename,pos={303,16},size={117,20}
 	TitleBox displayfilename,variable= root:analysis:system:gfilename
+	
+	
+	
 	Button buttonCalculateMoments,pos={10,457},size={130,20},proc=CalculateMomentsButton,title="Calculate Moments"
 	ValDisplay valdispgmoment1,pos={10,480},size={120,13},title="1st moment"
 	ValDisplay valdispgmoment1,limits={0,0,0},barmisc={0,1000}
@@ -18,6 +23,8 @@ Window integralFFTSUMpanel() : Panel
 	ValDisplay valdispgmoment3,pos={10,520},size={120,13},title="3rd moment"
 	ValDisplay valdispgmoment3,limits={0,0,0},barmisc={0,1000}
 	ValDisplay valdispgmoment3,value= #"root:analysis:system:gmoment3"
+	
+	
 	Button buttonstoremomenta,pos={9,537},size={130,20},proc=SetMomentStorageWaveName,title="Mom. Storage Loc. "
 	TitleBox title0,pos={146,538},size={9,9}
 	TitleBox title0,variable= root:analysis:system:gmomentstoragewavename
