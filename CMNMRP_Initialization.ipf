@@ -783,14 +783,146 @@ Function T1TabMaster()
 	
 	SetActiveSubwindow	 ConMatNMRPro#T1Tab
 
+	variable x, y
+
+	//File Name and Load File
+	
+	x=380;y=25
+	
+	TitleBox title0,pos={x+70,y},size={117,20}, disable=0
+	TitleBox title0,variable= root:analysis:system:gfilename
+	PopupMenu popupseclectwave,pos={x,y+30},size={231,20},proc=loadspectrum,title="Select Wave", disable=0
+	PopupMenu popupseclectwave,mode=3,popvalue="",value= #"ListofWavesinFolder()"
+	PopupMenu popuploadfile,pos={x,y+55},size={148,20},proc=LoadFile,title="Load File", disable=0
+	PopupMenu popuploadfile,mode=1,popvalue="Tecmag (.tnt)",value= #"\"Tecmag (.tnt);Tecmag Field Sweep (.txt folder);Magres2000 (.mr2)\""
+
+	//Time wave
+	
+	x=20; y=150
+	
+	SetVariable setvargtstart,pos={x,y},size={100,15},title="time start"
+	SetVariable setvargtstart,value= root:analysis:system:gtstart
+	SetVariable setvargtend,pos={x,y+20},size={100,15},title="time end"
+	SetVariable setvargtend,value= root:analysis:system:gtend
+	SetVariable setvargtoffset,pos={x,y+40},size={100,15},title="time offset"
+	SetVariable setvargtoffset,value= root:analysis:system:gtoffset
+	Button buttonMaketimewave,pos={x-10,y+57},size={140,20},proc=Maketimewave,title="Make log Time wave"
+
+	//Spin for fit
+	
+	NewPanel/W=(730, 160, 960, 295)/Host=##
+	
+	x=10;y=15	
+	
+	PopupMenu popupgspin,pos={x,y},size={107,20},proc=Spinpopup,title="Nuclear Spin"
+	PopupMenu popupgspin,mode=1,popvalue="1/2",value= #"\"1/2;3/2;5/2;7/2;9/2\""
+	
+	SetVariable setvargrecoveries,pos={x+115,y},size={90,15},title="#recoveries"
+	SetVariable setvargrecoveries,limits={1,inf,1},value= root:analysis:system:grecoveries	
+	
+	PopupMenu popupgtransition,pos={x,y+30},size={186,20},proc=Spinpopup,title="Nuclear Transiiton"
+	PopupMenu popupgtransition,mode=1,popvalue="1/2<->-1/2",value= #"\"1/2<->-1/2; 1/2<->3/2; 3/2<->5/2; 5/2<->7/2;7/2<->9/2\""
+	
+	PopupMenu popupgNQR,pos={x,y+60},size={116,20},proc=Spinpopup,title="NMR or NQR?"
+	PopupMenu popupgNQR,mode=1,popvalue="NMR",value= #"\"NMR;NQR\""
+
+	CheckBox checkgstretched,pos={x+130, y+60},size={66,14},title="Stretched?"
+	CheckBox checkgstretched,variable= root:analysis:system:gstretch
+
+	string spintitle
+	
+	spintitle="I="+num2istr(expt.spin)+"/2     T=" +num2istr(expt.transition)+"/2<->"+num2istr(expt.transitionlower)
+	spintitle+= "/2     "+expt.NQRstring
+
+	TitleBox titlespin,pos={x,y+90},size={100,17},fSize=12, frame=0
+	TitleBox titlespin,limits={0,0,0},barmisc={0,1000},mode= 1
+	TitleBox titlespin,title=spintitle
+
+	//Guess T1
+	
+	NewPanel/W=(730, 305, 960, 430)/Host=##
+	
+	x=10; y=15
+	
+	SetVariable setvargMguess,pos={x,y},size={120,15},proc=T1guesscontrol,title="M guess"
+	SetVariable setvargMguess,value= root:analysis:system:gMguess
+	SetVariable setvargMinfM0guess,pos={x, y+20},size={120,15},proc=T1guesscontrol,title="Tip frac. guess"
+	SetVariable setvargMinfM0guess,value= root:analysis:system:gtipguess
+	SetVariable setvargT1guess,pos={x, y+40},size={120,15},proc=T1guesscontrol,title="T1 guess"
+	SetVariable setvargT1guess,value= root:analysis:system:gT1guess
+	SetVariable setvargexponentguess,pos={x, y+60},size={120,15},proc=T1guesscontrol,title="Exponent guess"
+	SetVariable setvargexponentguess,value= root:analysis:system:gstretchguess
+	
+	
+	Button buttonCursorguess,pos={x,y+80},size={100,20},proc=Cursorguess,title="Cursor Guess"
+	SetVariable setvargrecoveriesguessindex,pos={x+120,y},size={45,15},title="#"
+	SetVariable setvargrecoveriesguessindex,limits={1,inf,1},value= root:analysis:system:grecoveriesguessindex
+
+	//Fit T1
+
+	NewPanel/W=(730, 445, 960, 570)/Host=##
+	
+	x=10; y=10
+	
+	Button buttonFitT1,pos={x+80,y},size={50,20},proc=FitT1,title="Fit T1"
+	
+	SetVariable setvargrecoveriesindex,pos={x,y},size={45,15},title="#"
+	SetVariable setvargrecoveriesindex,limits={1,inf,1},value= root:analysis:system:grecoveriesindex
+	
+	ValDisplay valdispgM,pos={x,y+25},size={95,13},title="M fit"
+	ValDisplay valdispgM,limits={0,0,0},barmisc={0,1000}
+	ValDisplay valdispgM,value= #"root:analysis:system:gM"
+	ValDisplay valdispgMerror,pos={x+100,y+25},size={95,13},title="+/-"
+	ValDisplay valdispgMerror,limits={0,0,0},barmisc={0,1000}
+	ValDisplay valdispgMerror,value= #"root:analysis:system:gMerror"
+	
+	ValDisplay valdispgtip,pos={x, y+45},size={95,13},title="Inv. frac. fit"
+	ValDisplay valdispgtip,limits={0,0,0},barmisc={0,1000}
+	ValDisplay valdispgtip,value= #"root:analysis:system:gtip"
+	ValDisplay valdispgtiperror,pos={x+100, y+45},size={95,13},title="+/-"
+	ValDisplay valdispgtiperror,limits={0,0,0},barmisc={0,1000}
+	ValDisplay valdispgtiperror,value= #"root:analysis:system:gtiperror"
+
+	ValDisplay valdispgT1,pos={x,y+65},size={95,13},title="T1 fit"
+	ValDisplay valdispgT1,limits={0,0,0},barmisc={0,1000}
+	ValDisplay valdispgT1,value= #"root:analysis:system:gT1"
+	ValDisplay valdispgT1error,pos={x+100, y+65},size={95,13},title="+/-"
+	ValDisplay valdispgT1error,limits={0,0,0},barmisc={0,1000}
+	ValDisplay valdispgT1error,value= #"root:analysis:system:gT1error"
+		
+	ValDisplay valdispgexpfit,pos={x, y+85},size={95,13},title="Exp fit"
+	ValDisplay valdispgexpfit,limits={0,0,0},barmisc={0,1000}
+	ValDisplay valdispgexpfit,value= #"root:analysis:system:gstretchfit"
+	ValDisplay valdispgexpfiterror,pos={x+100, y+85},size={95,13},title="+/-"
+	ValDisplay valdispgexpfiterror,limits={0,0,0},barmisc={0,1000}
+	ValDisplay valdispgexpfiterror,value= #"root:analysis:system:gstretchfiterror"	
+
+	//Store Data
+	
+	NewPanel/W=(175, 570, 400, 710)/Host=##
+	
+	x=10;y=10
+	
+	PopupMenu popupt1storage,pos={x,y},size={186,20},proc=T1storagePopup,title="StorageWave"
+	PopupMenu popupt1storage,mode=1, popvalue="T1vs", value= #"ListofT1vsWavesinFolder()"
+	
+	TitleBox title0,pos={x,y+25},size={9,9}
+	TitleBox title0,variable= root:analysis:system:gt1storagename
+	SetVariable setvargindex,pos={x, y+50},size={110,15},title="Storage Index"
+	SetVariable setvargindex,value= root:analysis:system:gt1index
+	SetVariable setvargindexparameter,pos={x, y+75},size={180,15},title="Index Parameter (H, w, T, ect)"
+	SetVariable setvargindexparameter,value= root:analysis:system:gt1indexparameter
+	Button buttonStoreData,pos={x, y+100},size={90,20},proc=StoreFitParameters,title="Store fit data"
+
 	//Graphs
 
-	Display/W=(175,140,710,540)/HOST=#  root:analysis:system:Zchan,root:analysis:system:Bchan,root:analysis:system:Achan
-	setactivesubwindow #
-	ModifyGraph rgb(Zchan)=(0,0,0),rgb(Bchan)=(1,12815,52428)
-	Label bottom "Time (s)"
-	Cursor/P A Achan 56;Cursor/P B Zchan 210
-	RenameWindow #,G0
+	Display/W=(175,140,710,540)/HOST=ConMatNMRPro#T1Tab  root:analysis:system:M vs root:analysis:system:timewave
+	AppendToGraph root:analysis:system:fit_M vs root:analysis:system:timewave
+	ModifyGraph mode(M)=3
+	ModifyGraph marker(M)=19
+	ModifyGraph log(bottom)=1
+	Label bottom "Time (us)"
+	Label left "M(t)"
 	SetActiveSubwindow ##
 
 End
