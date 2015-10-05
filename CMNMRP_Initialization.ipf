@@ -51,7 +51,7 @@ Function Makevariables()
 	
 	//Analysis variables
 	variable/g gbuffer, gbaselinestart, gbaselineend, gwindowstart, gwindowend, gbaseline, gwindow, gfilter, gfilterrange, gtphase, gtphasecorrect, gscanphase
-	variable/g gfphase1, gfphase2, gfphasecorrect, gautophase1, gintreal, gintimag,gintmag, gindex, gindexparameter, gusegyro, gStoN
+	variable/g gfphase1, gfphase2, gfphasecorrect, gautophase1, gintreal=1, gintimag,gintmag, gindex, gindexparameter, gusegyro, gStoN
 	
 	//T1variables
 	variable/g gspin=1, gtransition=1, gtransitionlower=1, gNQR=0, gMguess, gM, gMerror,  gT1guess, gT1, gT1error,  gtipguess, gtip, gtiperror,  gtstart, gtend, gtoffset
