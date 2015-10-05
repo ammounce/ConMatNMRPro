@@ -20,6 +20,8 @@ Function LoadTecMag()		//need macro to interface; function speeds things up
 	
 	readtechmagfile(pathname, filename, expt)
 
+	DetectExpttype(expt)
+
 	loadspectrum("", 0, expt.filename)
 	
 End
@@ -231,4 +233,31 @@ Function readmagresfile(pathname, filename, s)
 	
 	
 	setdatafolder root:
+end
+
+Function DetectExpttype(s)
+	STRUCT NMRData &s
+	
+	if(strsearch(s.filename, "T1", 0)>=0)
+		s.experimenttype=0
+		s.T1measure=1
+		s.fieldsweep=0
+		s.frequencysweep=0
+	elseif(strsearch(s.filename, "HS",0)>=0)
+		s.experimenttype=1
+		s.fieldsweep=1
+		s.T1measure=0
+		s.frequencysweep=0
+	elseif(strsearch(s.filename, "ws", 0)>=0)
+		s.experimenttype=2
+		s.frequencysweep=1
+		s.T1measure=0
+		s.fieldsweep=0
+	elseif(strsearch(s.filename, "T2", 0)>=0)
+		s.experimenttype=3
+	elseif(strsearch(s.filename, "Nut",0)>=0)
+		s.experimenttype=4
+	elseif(strsearch(s.filename, "Rep",0)>=0)
+		s.experimenttype=5
+	endif
 end

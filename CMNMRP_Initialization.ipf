@@ -47,7 +47,7 @@ Function Makevariables()
 	setdatafolder root:analysis:system
 
 	//Datavariables
-	variable/g gw0, gdw,gw,  gH0, gdH,gH, gsamplerate, gdatapoints, gpoints1D, gpoints2D, gfieldsweep, gfrequencysweep, gT1measure, ggyro
+	variable/g gexperimenttype, gw0, gdw,gw,  gH0, gdH,gH, gsamplerate, gdatapoints, gpoints1D, gpoints2D, gfieldsweep, gfrequencysweep, gT1measure, ggyro
 	
 	//Analysis variables
 	variable/g gbuffer, gbaselinestart, gbaselineend, gwindowstart, gwindowend, gbaseline, gwindow, gfilter, gfilterrange, gtphase, gtphasecorrect, gscanphase
