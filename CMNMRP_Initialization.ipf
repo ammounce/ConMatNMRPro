@@ -810,7 +810,9 @@ Function T1TabMaster()
 
 	//Spin for fit
 	
-	NewPanel/W=(730, 160, 960, 295)/Host=ConMatNMRPRo#T1Tab
+	x=730; y=135
+	
+	NewPanel/W=(x, y,x+230, y+135)/Host=ConMatNMRPRo#T1Tab
 	
 	x=10;y=15	
 	
@@ -840,7 +842,9 @@ Function T1TabMaster()
 
 	//Guess T1
 	
-	NewPanel/W=(730, 305, 960, 430)/Host=ConMatNMRPRo#T1Tab
+	x=730; y=135+135
+	
+	NewPanel/W=(x,y,x+230, y+130)/Host=ConMatNMRPRo#T1Tab
 	
 	x=10; y=15
 	
@@ -860,7 +864,9 @@ Function T1TabMaster()
 
 	//Fit T1
 
-	NewPanel/W=(730, 445, 960, 570)/Host=ConMatNMRPro#T1Tab
+	x=730; y=135+135+130
+
+	NewPanel/W=(x, y, x+230, y+125)/Host=ConMatNMRPro#T1Tab
 	
 	x=10; y=10
 	
@@ -899,7 +905,9 @@ Function T1TabMaster()
 
 	//Store Data
 	
-	NewPanel/W=(175, 570, 400, 710)/Host=ConMatNMRPro#T1Tab
+	x=730; y=135+135+130+125
+	
+	NewPanel/W=(x, y, x+230, y+145)/Host=ConMatNMRPro#T1Tab
 	
 	x=10;y=10
 	
@@ -949,7 +957,9 @@ Function FFTIntTabMaster()
 
 	//Moment Panel
 	
-	NewPanel/W=(50, 550, 400, 700)/Host=ConMatNMRPro#FFTIntTab
+	x=275; y=550
+	
+	NewPanel/W=(x,y, x+350, y+150)/Host=ConMatNMRPro#FFTIntTab
 	
 	x=10;y=10
 	
@@ -1074,7 +1084,9 @@ Function FFTIntTabMaster()
 
 	//Set Guess Parameters
 	
-	NewPanel/W=(730, 130, 960, 270)/Host=ConMatNMRPRo#FFTIntTab
+	x=730; y=135
+	
+	NewPanel/W=(x, 135, x+230, y+135)/Host=ConMatNMRPRo#FFTIntTab
 
 	 x=10; y=10
 	
@@ -1105,7 +1117,9 @@ Function FFTIntTabMaster()
 
 	//Display Fit Parameters
 	
-	NewPanel/W=(730, 270, 960, 510)/Host=ConMatNMRPRo#FFTIntTab
+	x=730; y=135+135
+	
+	NewPanel/W=(x, y, x+230, y+235)/Host=ConMatNMRPRo#FFTIntTab
 
 	x=10;y=10
 
