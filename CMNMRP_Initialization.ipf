@@ -810,7 +810,7 @@ Function T1TabMaster()
 
 	//Spin for fit
 	
-	NewPanel/W=(730, 160, 960, 295)/Host=##
+	NewPanel/W=(730, 160, 960, 295)/Host=ConMatNMRPRo#T1Tab
 	
 	x=10;y=15	
 	
@@ -840,7 +840,7 @@ Function T1TabMaster()
 
 	//Guess T1
 	
-	NewPanel/W=(730, 305, 960, 430)/Host=##
+	NewPanel/W=(730, 305, 960, 430)/Host=ConMatNMRPRo#T1Tab
 	
 	x=10; y=15
 	
@@ -860,7 +860,7 @@ Function T1TabMaster()
 
 	//Fit T1
 
-	NewPanel/W=(730, 445, 960, 570)/Host=##
+	NewPanel/W=(730, 445, 960, 570)/Host=ConMatNMRPro#T1Tab
 	
 	x=10; y=10
 	
@@ -899,7 +899,7 @@ Function T1TabMaster()
 
 	//Store Data
 	
-	NewPanel/W=(175, 570, 400, 710)/Host=##
+	NewPanel/W=(175, 570, 400, 710)/Host=ConMatNMRPro#T1Tab
 	
 	x=10;y=10
 	
@@ -949,7 +949,7 @@ Function FFTIntTabMaster()
 
 	//Moment Panel
 	
-	NewPanel/W=(50, 570, 400, 720)/Host=##
+	NewPanel/W=(50, 550, 400, 700)/Host=ConMatNMRPro#FFTIntTab
 	
 	x=10;y=10
 	
@@ -1070,6 +1070,104 @@ Function FFTIntTabMaster()
 	ValDisplay valdispgLxfiterror,pos={440,610},size={100,13},title="+/-"
 	ValDisplay valdispgLxfiterror,limits={0,0,0},barmisc={0,1000}
 	ValDisplay valdispgLxfiterror,value= #"root:analysis:system:gLxfiterror"
+
+
+	//Set Guess Parameters
+	
+	NewPanel/W=(730, 130, 960, 270)/Host=ConMatNMRPRo#FFTIntTab
+
+	 x=10; y=10
+	
+	SetVariable setvargGaussians,pos={x,y},size={80,15},proc=GLGuessControl,title="Gaussians"
+	SetVariable setvargGaussians,limits={0,inf,1},value= root:analysis:system:ggaussians
+	SetVariable setvargLorentzians,pos={x+100,y},size={90,15},proc=GLGuessControl,title="Lorentzians"
+	SetVariable setvargLorentzians,limits={0,inf,1},value= root:analysis:system:glorentzians
+	SetVariable setvargbaseline,pos={x+50,y+20},size={100,15},proc=GLGuessControl,title="Baseline"
+	SetVariable setvargbaseline,limits={0,inf,1},value= root:analysis:system:gFIbaseline
+
+	SetVariable setvargGindex,pos={x,y+40},size={60,15},proc=GLGuessControl,title="G#"
+	SetVariable setvargGindex,limits={0,inf,1},value= root:analysis:system:gGindex		
+	SetVariable setvargGA,pos={x,y+60},size={90,15},proc=GLGuessControl,title="A"
+	SetVariable setvargGA,limits={0,inf,1},value= root:analysis:system:gGA
+	SetVariable setvargGw,pos={x,y+80},size={90,15},proc=GLGuessControl,title="w"
+	SetVariable setvargGw,limits={0,inf,1},value= root:analysis:system:gGw
+	SetVariable setvargGx,pos={x,y+100},size={90,15},proc=GLGuessControl,title="x"
+	SetVariable setvargGx,limits={0,inf,1},value= root:analysis:system:gGx
+	
+	SetVariable setvargLindex,pos={x+100, y+40},size={60,15},proc=GLGuessControl,title="L#"
+	SetVariable setvargLindex,limits={0,inf,1},value= root:analysis:system:gLindex
+	SetVariable setvargGA1,pos={x+100, y+60},size={90,15},proc=GLGuessControl,title="A"
+	SetVariable setvargGA1,limits={0,inf,1},value= root:analysis:system:gLA
+	SetVariable setvargGw1,pos={x+100, y+80},size={90,15},proc=GLGuessControl,title="w"
+	SetVariable setvargGw1,limits={0,inf,1},value= root:analysis:system:gLw
+	SetVariable setvargGx1,pos={x+100, y+100},size={90,15},proc=GLGuessControl,title="x"
+	SetVariable setvargGx1,limits={0,inf,1},value= root:analysis:system:gLx
+
+	//Display Fit Parameters
+	
+	NewPanel/W=(730, 270, 960, 510)/Host=ConMatNMRPRo#FFTIntTab
+
+	x=10;y=10
+
+	Button buttonFitFI,pos={x+75, y},size={50,20},proc=FitFI,title="Fit"
+	ValDisplay valdispFIbaseline,pos={x,y+25},size={100,13},title="Baseline fit"
+	ValDisplay valdispFIbaseline,limits={0,0,0},barmisc={0,1000}
+	ValDisplay valdispFIbaseline,value= #"root:analysis:system:gFIBaselinefit"
+	ValDisplay valdispFIbaseline1,pos={x+100, y+25},size={100,13},title="+/-"
+	ValDisplay valdispFIbaseline1,value= #"root:analysis:system:gFIBaselinefiterror"
+	
+	//Gaussian components
+	
+	SetVariable setvargGfitindex,pos={x, y+50},size={80,15},proc=SetVarFitIndex,title="G index"
+	SetVariable setvargGfitindex,limits={0,inf,1},value= root:analysis:system:gGfitindex
+	ValDisplay valdispgGAfit,pos={x, y+70},size={100,13},title="G. A fit"
+	ValDisplay valdispgGAfit,limits={0,0,0},barmisc={0,1000}
+	ValDisplay valdispgGAfit,value= #"root:analysis:system:gGAfit"
+	ValDisplay valdispgGAfiterror,pos={x+100, y+70},size={100,13},title="+/-"
+	ValDisplay valdispgGAfiterror,limits={0,0,0},barmisc={0,1000}
+	ValDisplay valdispgGAfiterror,value= #"root:analysis:system:gGAfiterror"
+	ValDisplay valdispgGwfit,pos={x, y+90},size={100,13},title="G. w fit"
+	ValDisplay valdispgGwfit,limits={0,0,0},barmisc={0,1000}
+	ValDisplay valdispgGwfit,value= #"root:analysis:system:gGwfit"
+	ValDisplay valdispgGwfiterror,pos={x+100, y+90},size={100,13},title="+/-"
+	ValDisplay valdispgGwfiterror,limits={0,0,0},barmisc={0,1000}
+	ValDisplay valdispgGwfiterror,value= #"root:analysis:system:gGwfiterror"
+	ValDisplay valdispgGxfit,pos={x, y+110},size={100,13},title="G. x fit"
+	ValDisplay valdispgGxfit,limits={0,0,0},barmisc={0,1000}
+	ValDisplay valdispgGxfit,value= #"root:analysis:system:gGxfit"
+	ValDisplay valdispgGxfiterror,pos={x+100, y+110},size={100,13},title="+/-"
+	ValDisplay valdispgGxfiterror,limits={0,0,0},barmisc={0,1000}
+	ValDisplay valdispgGxfiterror,value= #"root:analysis:system:gGxfiterror"
+
+
+	//Lorentzian Components
+	
+	SetVariable setvargLfitindex,pos={x, y+135},size={80,15},proc=SetVarFitIndex,title="L index"
+	SetVariable setvargLfitindex,limits={0,inf,1},value= root:analysis:system:gLfitindex
+	ValDisplay valdispFIbaseline1,limits={0,0,0},barmisc={0,1000}
+	ValDisplay valdispgGLfit,pos={x, y+155},size={100,13},title="L. A fit"
+	ValDisplay valdispgGLfit,limits={0,0,0},barmisc={0,1000}
+	ValDisplay valdispgGLfit,value= #"root:analysis:system:gLAfit"
+	ValDisplay valdispgLAfiterror,pos={x+100, y+155},size={100,13},title="+/-"
+	ValDisplay valdispgLAfiterror,limits={0,0,0},barmisc={0,1000}
+	ValDisplay valdispgLAfiterror,value= #"root:analysis:system:gLAfiterror"
+	ValDisplay valdispgLwfit1,pos={x, y+175},size={100,13},title="L. w fit"
+	ValDisplay valdispgLwfit1,limits={0,0,0},barmisc={0,1000}
+	ValDisplay valdispgLwfit1,value= #"root:analysis:system:gLwfit"
+	ValDisplay valdispgLwfiterror,pos={x+100, y+175},size={100,13},title="+/-"
+	ValDisplay valdispgLwfiterror,limits={0,0,0},barmisc={0,1000}
+	ValDisplay valdispgLwfiterror,value= #"root:analysis:system:gLwfiterror"
+	ValDisplay valdispgLxfit1,pos={x, y+195},size={100,13},title="L. x fit"
+	ValDisplay valdispgLxfit1,limits={0,0,0},barmisc={0,1000}
+	ValDisplay valdispgLxfit1,value= #"root:analysis:system:gLxfit"
+	ValDisplay valdispgLxfiterror,pos={x+100, y+195},size={100,13},title="+/-"
+	ValDisplay valdispgLxfiterror,limits={0,0,0},barmisc={0,1000}
+	ValDisplay valdispgLxfiterror,value= #"root:analysis:system:gLxfiterror"
+
+	//Store fit data
+	
+	NewPanel/W=(730, 510, 960, 610)/Host=ConMatNMRPRo#FFTIntTab
+
 
 
 	//Graph
