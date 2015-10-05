@@ -977,6 +977,99 @@ Function FFTIntTabMaster()
 	SetVariable setvargmomindexparam,value= root:analysis:system:gmomentindexparameter
 	Button buttonStoreMoments,pos={x+150,y+100},size={130,20},proc=StoreMomParameters,title="Store Mom. Param."
 
+	//Fit Spec sub panel 
+	
+	NewPanel/W=(730, 160, 960, 295)/Host=##
+
+	x=10;y=10
+
+	SetVariable setvargGaussians,pos={x,y},size={80,15},proc=GLGuessControl,title="Gaussians"
+	SetVariable setvargGaussians,limits={0,inf,1},value= root:analysis:system:ggaussians
+	SetVariable setvargbaseline,pos={x+40,y+20},size={100,15},proc=GLGuessControl,title="Baseline"
+	SetVariable setvargbaseline,limits={0,inf,1},value= root:analysis:system:gFIbaseline
+
+	SetVariable setvargGindex,pos={x,y+40},size={80,15},proc=GLGuessControl,title="G#"
+	SetVariable setvargGindex,limits={0,inf,1},value= root:analysis:system:gGindex		
+	SetVariable setvargGA,pos={x,y+60},size={80,15},proc=GLGuessControl,title="A"
+	SetVariable setvargGA,limits={0,inf,1},value= root:analysis:system:gGA
+	SetVariable setvargGw,pos={x,y+80},size={80,15},proc=GLGuessControl,title="w"
+	SetVariable setvargGw,limits={0,inf,1},value= root:analysis:system:gGw
+	SetVariable setvargGx,pos={x,y+100},size={80,15},proc=GLGuessControl,title="x"
+	SetVariable setvargGx,limits={0,inf,1},value= root:analysis:system:gGx
+
+	x=100;y=10
+
+	SetVariable setvargLorentzians,pos={x,y},size={90,15},proc=GLGuessControl,title="Lorentzians"
+	SetVariable setvargLorentzians,limits={0,inf,1},value= root:analysis:system:glorentzians
+	
+	SetVariable setvargLindex,pos={x, y+40},size={60,15},proc=GLGuessControl,title="L#"
+	SetVariable setvargLindex,limits={0,inf,1},value= root:analysis:system:gLindex
+	SetVariable setvargLA,pos={x, y+60},size={60,15},proc=GLGuessControl,title="A"
+	SetVariable setvargLA,limits={0,inf,1},value= root:analysis:system:gLA
+	SetVariable setvargLw,pos={x, y+80},size={60,15},proc=GLGuessControl,title="w"
+	SetVariable setvargLw,limits={0,inf,1},value= root:analysis:system:gLw
+	SetVariable setvargLx,pos={x, y+100},size={60,15},proc=GLGuessControl,title="x"
+	SetVariable setvargLx,limits={0,inf,1},value= root:analysis:system:gLx
+
+
+	//Fit spec sub panel
+	
+	NewPanel/W=(730, 305, 960, 430)/Host=##
+
+	x=10;y=10
+		
+	Button buttonFitFI,pos={x,y},size={50,20},proc=FitFI,title="Fit"
+	
+	ValDisplay valdispFIbaseline,pos={x, y+20},size={100,13},title="Baseline fit"
+	ValDisplay valdispFIbaseline,limits={0,0,0},barmisc={0,1000}
+	ValDisplay valdispFIbaseline,value= #"root:analysis:system:gFIBaselinefit"
+	ValDisplay valdispFIbaseline1,pos={x+100, y+20},size={100,13},title="+/-"
+	ValDisplay valdispFIbaseline1,value= #"root:analysis:system:gFIBaselinefiterror"
+	
+	SetVariable setvargGfitindex,pos={340,494},size={80,15},proc=SetVarFitIndex,title="G index"
+	SetVariable setvargGfitindex,limits={0,inf,1},value= root:analysis:system:gGfitindex
+	ValDisplay valdispgGAfit,pos={340,510},size={100,13},title="G. A fit"
+	ValDisplay valdispgGAfit,limits={0,0,0},barmisc={0,1000}
+	ValDisplay valdispgGAfit,value= #"root:analysis:system:gGAfit"
+	ValDisplay valdispgGAfiterror,pos={440,510},size={100,13},title="+/-"
+	ValDisplay valdispgGAfiterror,limits={0,0,0},barmisc={0,1000}
+	ValDisplay valdispgGAfiterror,value= #"root:analysis:system:gGAfiterror"
+	ValDisplay valdispgGwfit,pos={340,525},size={100,13},title="G. w fit"
+	ValDisplay valdispgGwfit,limits={0,0,0},barmisc={0,1000}
+	ValDisplay valdispgGwfit,value= #"root:analysis:system:gGwfit"
+	ValDisplay valdispgGwfiterror,pos={440,525},size={100,13},title="+/-"
+	ValDisplay valdispgGwfiterror,limits={0,0,0},barmisc={0,1000}
+	ValDisplay valdispgGwfiterror,value= #"root:analysis:system:gGwfiterror"
+	ValDisplay valdispgGxfit,pos={340,540},size={100,13},title="G. x fit"
+	ValDisplay valdispgGxfit,limits={0,0,0},barmisc={0,1000}
+	ValDisplay valdispgGxfit,value= #"root:analysis:system:gGxfit"
+	ValDisplay valdispgGxfiterror,pos={440,540},size={100,13},title="+/-"
+	ValDisplay valdispgGxfiterror,limits={0,0,0},barmisc={0,1000}
+	ValDisplay valdispgGxfiterror,value= #"root:analysis:system:gGxfiterror"
+	
+	
+	
+	SetVariable setvargLfitindex,pos={340,560},size={80,15},proc=SetVarFitIndex,title="L index"
+	SetVariable setvargLfitindex,limits={0,inf,1},value= root:analysis:system:gLfitindex
+	ValDisplay valdispFIbaseline1,limits={0,0,0},barmisc={0,1000}
+	ValDisplay valdispgGLfit,pos={340,580},size={100,13},title="L. A fit"
+	ValDisplay valdispgGLfit,limits={0,0,0},barmisc={0,1000}
+	ValDisplay valdispgGLfit,value= #"root:analysis:system:gLAfit"
+	ValDisplay valdispgLAfiterror,pos={440,580},size={100,13},title="+/-"
+	ValDisplay valdispgLAfiterror,limits={0,0,0},barmisc={0,1000}
+	ValDisplay valdispgLAfiterror,value= #"root:analysis:system:gLAfiterror"
+	ValDisplay valdispgLwfit1,pos={340,595},size={100,13},title="L. w fit"
+	ValDisplay valdispgLwfit1,limits={0,0,0},barmisc={0,1000}
+	ValDisplay valdispgLwfit1,value= #"root:analysis:system:gLwfit"
+	ValDisplay valdispgLwfiterror,pos={440,595},size={100,13},title="+/-"
+	ValDisplay valdispgLwfiterror,limits={0,0,0},barmisc={0,1000}
+	ValDisplay valdispgLwfiterror,value= #"root:analysis:system:gLwfiterror"
+	ValDisplay valdispgLxfit1,pos={340,610},size={100,13},title="L. x fit"
+	ValDisplay valdispgLxfit1,limits={0,0,0},barmisc={0,1000}
+	ValDisplay valdispgLxfit1,value= #"root:analysis:system:gLxfit"
+	ValDisplay valdispgLxfiterror,pos={440,610},size={100,13},title="+/-"
+	ValDisplay valdispgLxfiterror,limits={0,0,0},barmisc={0,1000}
+	ValDisplay valdispgLxfiterror,value= #"root:analysis:system:gLxfiterror"
 
 
 	//Graph
