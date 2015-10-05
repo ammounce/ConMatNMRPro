@@ -11,7 +11,7 @@ Window integralFFTSUMpanel() : Panel
 	TitleBox displayfilename,pos={303,16},size={117,20}
 	TitleBox displayfilename,variable= root:analysis:system:gfilename
 	
-	
+	//Moments display
 	
 	Button buttonCalculateMoments,pos={10,457},size={130,20},proc=CalculateMomentsButton,title="Calculate Moments"
 	ValDisplay valdispgmoment1,pos={10,480},size={120,13},title="1st moment"
@@ -34,6 +34,8 @@ Window integralFFTSUMpanel() : Panel
 	SetVariable setvargmomindexparam,pos={85,564},size={90,15},title="Param."
 	SetVariable setvargmomindexparam,value= root:analysis:system:gmomentindexparameter
 	Button buttonAutoscaleFFTSum,pos={611,457},size={80,20},proc=AutoScale,title="Auto Scale"
+	
+	//Set Guess parameters
 	
 	
 	SetVariable setvargGaussians,pos={200,460},size={80,15},proc=GLGuessControl,title="Gaussians"
@@ -112,6 +114,8 @@ Window integralFFTSUMpanel() : Panel
 	ValDisplay valdispgLxfiterror,pos={440,610},size={100,13},title="+/-"
 	ValDisplay valdispgLxfiterror,limits={0,0,0},barmisc={0,1000}
 	ValDisplay valdispgLxfiterror,value= #"root:analysis:system:gLxfiterror"
+	
+	
 	String fldrSav0= GetDataFolder(1)
 	SetDataFolder root:analysis:system:
 	Display/W=(13,78,688,448)/HOST=#  root:analysis:system:fftsumwave//,FIguessfit,fit_fftsumwave
