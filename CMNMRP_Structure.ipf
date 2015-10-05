@@ -174,10 +174,10 @@ Function InitExpt(s)
 	wave s.data=root:$s.filename
 	wave s.statwave=root:analysis:statwaves:$("Stats"+s.filename)	
 
-	s.timewindow="NMRAnalysis#G0"
-	s.fftwindow="NMRAnalysis#G1"
-	s.fftsumintwindow="IntegralFFTSumPanel#G0"
-	s.t1window="T1panel#G0"
+	s.timewindow="ConMatNMRPro#DataTab#G0"
+	s.fftwindow="ConMatNMRPro#DataTab#G1"
+	s.fftsumintwindow="ConMatNMRPro#FFTIntTab#G0"
+	s.t1window="ConMatNMRPro#T1Tab#G0"
 	
 	wave s.tempmr2_0=root:analysis:system:tempmr2_0
 	wave s.tempmr2_1=root:analysis:system:tempmr2_1
