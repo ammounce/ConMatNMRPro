@@ -76,8 +76,6 @@ Function Makevariables()
 	variable/g gtpoints, gtdecimal, gttecmag,gtmapping
 	
 	//General Variables
-	variable/g gprevioustab=0
-
 	string/g gfilename, gstatwavename, gfftsumname, gtimewavename, gMname, gintwavename, gstoragewavename
 
 	

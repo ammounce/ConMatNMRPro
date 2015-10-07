@@ -344,7 +344,7 @@ Function integratedata(ctrlname):ButtonControl
 		print integralwave, xcsr(A, datawindow), xcsr(B,datawindow)
 	
 		STRUCT WMTabControlAction tca; tca.tab=1
-		TabControl Tabs, win=ConMatNMRPro, value=1; expt.previoustab=0
+		TabControl Tabs, win=ConMatNMRPro, value=1
 		ConMatNMRProTabControl(tca)
 
 		duplicate/o expt.sysM, root:analysis:T1waves:$("M"+expt.filename)
