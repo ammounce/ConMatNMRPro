@@ -305,7 +305,8 @@ Function integratedata(ctrlname):ButtonControl
 	string ctrlname
 	
 	STRUCT NMRData expt; initexpt(expt)
-	
+	STRUCT WMTabControlAction tca
+		
 	variable i=0
 	string datawindow
 	if(samestring(ctrlname, "buttonIntimedomain")==1)
@@ -343,7 +344,7 @@ Function integratedata(ctrlname):ButtonControl
 	
 		print integralwave, xcsr(A, datawindow), xcsr(B,datawindow)
 	
-		STRUCT WMTabControlAction tca; tca.tab=1
+		tca.tab=1
 		TabControl Tabs, win=ConMatNMRPro, value=1
 		ConMatNMRProTabControl(tca)
 
@@ -374,6 +375,10 @@ Function integratedata(ctrlname):ButtonControl
 		elseif(V_flag ==1)
 			DoWindow/F integralFFTSUMpanel
 		endif	
+		
+		tca.tab=2
+		TabControl Tabs, win=ConMatNMRPro, value=2
+		ConMatNMRProTabControl(tca)
 		
 		DisplayIntegral(expt)
 				
@@ -443,17 +448,12 @@ Function FFTsum(ctrlname):ButtonControl
 		while(i<expt.points2D-1)
 		
 	endif
+
+	STRUCT WMTabControlAction tca; tca.tab=2
+	TabControl Tabs, win=ConMatNMRPro, value=2
+	ConMatNMRProTabControl(tca)
 		
-	DoWindow IntegralFFTSUMpanel
-
-	if(V_flag ==0)
-		Execute "IntegralFFTSUMpanel()"
-	elseif(V_flag ==1)
-		DoWindow/F IntegralFFTSUMpanel
-	endif	
-	
 	DisplayFFTsum(expt)	
-
 	
 	duplicate/o expt.sysfftsum, root:analysis:fftsums:$("FFTSum"+expt.filename)
 
