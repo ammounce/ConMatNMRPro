@@ -341,14 +341,12 @@ Function integratedata(ctrlname):ButtonControl
 			i+=1
 		while(i<expt.points2D)
 	
-		DoWindow t1panel
+		print integralwave, xcsr(A, datawindow), xcsr(B,datawindow)
+	
+		STRUCT WMTabControlAction tca; tca.tab=1
+		TabControl Tabs, win=ConMatNMRPro, value=1; expt.previoustab=0
+		ConMatNMRProTabControl(tca)
 
-		if(V_flag ==0)
-			Execute "t1panel()"
-		elseif(V_flag ==1)
-			DoWindow/F t1panel
-		endif	
-		
 		duplicate/o expt.sysM, root:analysis:T1waves:$("M"+expt.filename)
 		
 	elseif(expt.frequencysweep==1 || expt.fieldsweep==1)

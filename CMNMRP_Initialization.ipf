@@ -47,11 +47,11 @@ Function Makevariables()
 	setdatafolder root:analysis:system
 
 	//Datavariables
-	variable/g gw0, gdw,gw,  gH0, gdH,gH, gsamplerate, gdatapoints, gpoints1D, gpoints2D, gfieldsweep, gfrequencysweep, gT1measure, ggyro
+	variable/g gexperimenttype, gw0, gdw,gw,  gH0, gdH,gH, gsamplerate, gdatapoints, gpoints1D, gpoints2D, gfieldsweep, gfrequencysweep, gT1measure, ggyro
 	
 	//Analysis variables
 	variable/g gbuffer, gbaselinestart, gbaselineend, gwindowstart, gwindowend, gbaseline, gwindow, gfilter, gfilterrange, gtphase, gtphasecorrect, gscanphase
-	variable/g gfphase1, gfphase2, gfphasecorrect, gautophase1, gintreal, gintimag,gintmag, gindex, gindexparameter, gusegyro, gStoN
+	variable/g gfphase1, gfphase2, gfphasecorrect, gautophase1, gintreal=1, gintimag,gintmag, gindex, gindexparameter, gusegyro, gStoN
 	
 	//T1variables
 	variable/g gspin=1, gtransition=1, gtransitionlower=1, gNQR=0, gMguess, gM, gMerror,  gT1guess, gT1, gT1error,  gtipguess, gtip, gtiperror,  gtstart, gtend, gtoffset
@@ -258,24 +258,6 @@ Function loadstats(s)
 End	
 
 //Sets up the main analysis panel
-//Calls the ConMatNMRProMaster() Function so that the recreation macro is not overwritten when closed
-//Modifications to the actual setup of the panel should be made in ConMatNMRProMaster() other than	
-	
-//	PauseUpdate; Silent 1		// building window...
-//	NewPanel /W=(0,0,1250,700)
-//	ShowTools/A
-	
-//	NMRAnalysisMaster()
-
-//If the panel is acidentlaly overwritten, replace the macro with the above code
-
-//Window ConMatNMRPro() : Panel
-	PauseUpdate; Silent 1		// building window...
-	NewPanel /W=(0,0,1250,700)
-	ShowTools/A
-	
-	NMRAnalysisMaster()
-//EndMacro
 
 Window ConMatNMRPro() : Panel
 	PauseUpdate; Silent 1		// building window...
@@ -283,7 +265,6 @@ Window ConMatNMRPro() : Panel
 	
 	TabControl Tabs,pos={1,0},size={1270,740},font="Arial",tabLabel(0)="Data", disable=0
 	TabControl Tabs,tabLabel(1)="T1",tabLabel(2)="FFT/Integral",value= 0, proc=ConMatNMRProTabControl	
-	
 	
 	DataTabMaster();SetActiveSubWindow ConMatNMRPro
 	T1TabMaster();SetActiveSubWindow ConMatNMRPro
@@ -293,10 +274,6 @@ Window ConMatNMRPro() : Panel
 
 EndMacro
 
-
-
-
-	
 Function DataTabMaster()
 	
 	STRUCT NMRdata expt; initexpt(expt)
@@ -495,8 +472,6 @@ Function DataTabMaster()
 	Cursor/P A FFTZchan 496;Cursor/P B FFTZchan 524
 	RenameWindow #,G1
 	SetActiveSubwindow ##
-	
-	//expt.previoustab=0
 
 End
 	
@@ -535,8 +510,10 @@ Function T1TabMaster()
 	Button buttonMaketimewave,pos={x-10,y+57},size={140,20},proc=Maketimewave,title="Make log Time wave"
 
 	//Spin for fit
+
+	x=730; y=135
 	
-	NewPanel/W=(730, 160, 960, 295)/Host=conmatnmrpro#t1tab
+	NewPanel/W=(x, y,x+230, y+135)/Host=ConMatNMRPRo#T1Tab
 	
 	x=10;y=15	
 	
@@ -566,7 +543,9 @@ Function T1TabMaster()
 
 	//Guess T1
 	
-	NewPanel/W=(730, 305, 960, 430)/Host=##
+	x=730; y=135+135
+	
+	NewPanel/W=(x,y,x+230, y+130)/Host=ConMatNMRPRo#T1Tab
 	
 	x=10; y=15
 	
@@ -586,7 +565,9 @@ Function T1TabMaster()
 
 	//Fit T1
 
-	NewPanel/W=(730, 445, 960, 570)/Host=##
+	x=730; y=135+135+130
+
+	NewPanel/W=(x, y, x+230, y+125)/Host=ConMatNMRPro#T1Tab
 	
 	x=10; y=10
 	
@@ -625,7 +606,9 @@ Function T1TabMaster()
 
 	//Store Data
 	
-	NewPanel/W=(175, 570, 400, 710)/Host=##
+	x=730; y=135+135+130+125
+	
+	NewPanel/W=(x, y, x+230, y+145)/Host=ConMatNMRPro#T1Tab
 	
 	x=10;y=10
 	
@@ -675,7 +658,9 @@ Function FFTIntTabMaster()
 
 	//Moment Panel
 	
-	NewPanel/W=(50, 570, 400, 720)/Host=ConMatNMRPro#FFTIntTab
+	x=275; y=550
+	
+	NewPanel/W=(x,y, x+350, y+150)/Host=ConMatNMRPro#FFTIntTab
 	
 	x=10;y=10
 	
@@ -798,13 +783,112 @@ Function FFTIntTabMaster()
 	ValDisplay valdispgLxfiterror,value= #"root:analysis:system:gLxfiterror"
 
 
+	//Set Guess Parameters
+	
+	x=730; y=135
+	
+	NewPanel/W=(x, 135, x+230, y+135)/Host=ConMatNMRPRo#FFTIntTab
+
+	 x=10; y=10
+	
+	SetVariable setvargGaussians,pos={x,y},size={80,15},proc=GLGuessControl,title="Gaussians"
+	SetVariable setvargGaussians,limits={0,inf,1},value= root:analysis:system:ggaussians
+	SetVariable setvargLorentzians,pos={x+100,y},size={90,15},proc=GLGuessControl,title="Lorentzians"
+	SetVariable setvargLorentzians,limits={0,inf,1},value= root:analysis:system:glorentzians
+	SetVariable setvargbaseline,pos={x+50,y+20},size={100,15},proc=GLGuessControl,title="Baseline"
+	SetVariable setvargbaseline,limits={0,inf,1},value= root:analysis:system:gFIbaseline
+
+	SetVariable setvargGindex,pos={x,y+40},size={60,15},proc=GLGuessControl,title="G#"
+	SetVariable setvargGindex,limits={0,inf,1},value= root:analysis:system:gGindex		
+	SetVariable setvargGA,pos={x,y+60},size={90,15},proc=GLGuessControl,title="A"
+	SetVariable setvargGA,limits={0,inf,1},value= root:analysis:system:gGA
+	SetVariable setvargGw,pos={x,y+80},size={90,15},proc=GLGuessControl,title="w"
+	SetVariable setvargGw,limits={0,inf,1},value= root:analysis:system:gGw
+	SetVariable setvargGx,pos={x,y+100},size={90,15},proc=GLGuessControl,title="x"
+	SetVariable setvargGx,limits={0,inf,1},value= root:analysis:system:gGx
+	
+	SetVariable setvargLindex,pos={x+100, y+40},size={60,15},proc=GLGuessControl,title="L#"
+	SetVariable setvargLindex,limits={0,inf,1},value= root:analysis:system:gLindex
+	SetVariable setvargGA1,pos={x+100, y+60},size={90,15},proc=GLGuessControl,title="A"
+	SetVariable setvargGA1,limits={0,inf,1},value= root:analysis:system:gLA
+	SetVariable setvargGw1,pos={x+100, y+80},size={90,15},proc=GLGuessControl,title="w"
+	SetVariable setvargGw1,limits={0,inf,1},value= root:analysis:system:gLw
+	SetVariable setvargGx1,pos={x+100, y+100},size={90,15},proc=GLGuessControl,title="x"
+	SetVariable setvargGx1,limits={0,inf,1},value= root:analysis:system:gLx
+
+	//Display Fit Parameters
+	
+	x=730; y=135+135
+	
+	NewPanel/W=(x, y, x+230, y+235)/Host=ConMatNMRPRo#FFTIntTab
+
+	x=10;y=10
+
+	Button buttonFitFI,pos={x+75, y},size={50,20},proc=FitFI,title="Fit"
+	ValDisplay valdispFIbaseline,pos={x,y+25},size={100,13},title="Baseline fit"
+	ValDisplay valdispFIbaseline,limits={0,0,0},barmisc={0,1000}
+	ValDisplay valdispFIbaseline,value= #"root:analysis:system:gFIBaselinefit"
+	ValDisplay valdispFIbaseline1,pos={x+100, y+25},size={100,13},title="+/-"
+	ValDisplay valdispFIbaseline1,value= #"root:analysis:system:gFIBaselinefiterror"
+	
+	//Gaussian components
+	
+	SetVariable setvargGfitindex,pos={x, y+50},size={80,15},proc=SetVarFitIndex,title="G index"
+	SetVariable setvargGfitindex,limits={0,inf,1},value= root:analysis:system:gGfitindex
+	ValDisplay valdispgGAfit,pos={x, y+70},size={100,13},title="G. A fit"
+	ValDisplay valdispgGAfit,limits={0,0,0},barmisc={0,1000}
+	ValDisplay valdispgGAfit,value= #"root:analysis:system:gGAfit"
+	ValDisplay valdispgGAfiterror,pos={x+100, y+70},size={100,13},title="+/-"
+	ValDisplay valdispgGAfiterror,limits={0,0,0},barmisc={0,1000}
+	ValDisplay valdispgGAfiterror,value= #"root:analysis:system:gGAfiterror"
+	ValDisplay valdispgGwfit,pos={x, y+90},size={100,13},title="G. w fit"
+	ValDisplay valdispgGwfit,limits={0,0,0},barmisc={0,1000}
+	ValDisplay valdispgGwfit,value= #"root:analysis:system:gGwfit"
+	ValDisplay valdispgGwfiterror,pos={x+100, y+90},size={100,13},title="+/-"
+	ValDisplay valdispgGwfiterror,limits={0,0,0},barmisc={0,1000}
+	ValDisplay valdispgGwfiterror,value= #"root:analysis:system:gGwfiterror"
+	ValDisplay valdispgGxfit,pos={x, y+110},size={100,13},title="G. x fit"
+	ValDisplay valdispgGxfit,limits={0,0,0},barmisc={0,1000}
+	ValDisplay valdispgGxfit,value= #"root:analysis:system:gGxfit"
+	ValDisplay valdispgGxfiterror,pos={x+100, y+110},size={100,13},title="+/-"
+	ValDisplay valdispgGxfiterror,limits={0,0,0},barmisc={0,1000}
+	ValDisplay valdispgGxfiterror,value= #"root:analysis:system:gGxfiterror"
+
+
+	//Lorentzian Components
+	
+	SetVariable setvargLfitindex,pos={x, y+135},size={80,15},proc=SetVarFitIndex,title="L index"
+	SetVariable setvargLfitindex,limits={0,inf,1},value= root:analysis:system:gLfitindex
+	ValDisplay valdispFIbaseline1,limits={0,0,0},barmisc={0,1000}
+	ValDisplay valdispgGLfit,pos={x, y+155},size={100,13},title="L. A fit"
+	ValDisplay valdispgGLfit,limits={0,0,0},barmisc={0,1000}
+	ValDisplay valdispgGLfit,value= #"root:analysis:system:gLAfit"
+	ValDisplay valdispgLAfiterror,pos={x+100, y+155},size={100,13},title="+/-"
+	ValDisplay valdispgLAfiterror,limits={0,0,0},barmisc={0,1000}
+	ValDisplay valdispgLAfiterror,value= #"root:analysis:system:gLAfiterror"
+	ValDisplay valdispgLwfit1,pos={x, y+175},size={100,13},title="L. w fit"
+	ValDisplay valdispgLwfit1,limits={0,0,0},barmisc={0,1000}
+	ValDisplay valdispgLwfit1,value= #"root:analysis:system:gLwfit"
+	ValDisplay valdispgLwfiterror,pos={x+100, y+175},size={100,13},title="+/-"
+	ValDisplay valdispgLwfiterror,limits={0,0,0},barmisc={0,1000}
+	ValDisplay valdispgLwfiterror,value= #"root:analysis:system:gLwfiterror"
+	ValDisplay valdispgLxfit1,pos={x, y+195},size={100,13},title="L. x fit"
+	ValDisplay valdispgLxfit1,limits={0,0,0},barmisc={0,1000}
+	ValDisplay valdispgLxfit1,value= #"root:analysis:system:gLxfit"
+	ValDisplay valdispgLxfiterror,pos={x+100, y+195},size={100,13},title="+/-"
+	ValDisplay valdispgLxfiterror,limits={0,0,0},barmisc={0,1000}
+	ValDisplay valdispgLxfiterror,value= #"root:analysis:system:gLxfiterror"
+
+	//Store fit data
+	
+	NewPanel/W=(730, 510, 960, 610)/Host=ConMatNMRPRo#FFTIntTab
+
 	//Graph
 
 	Display/W=(175,140,710,540)/HOST=ConMatNMRPro#FFTIntTab  root:analysis:system:fftsumwave
 	Label left "Intensity (a.u.)"
 	Label bottom "Field (T)"
 
-	//expt.previoustab=2
 
 End
 

@@ -9,7 +9,7 @@
 Structure NMRdata
 	
 	//Data variables
-	NVAR  w0, dw,w, H0, dH,H, samplerate,points1D, points2D, fieldsweep, frequencysweep, T1measure
+	NVAR  experimenttype, w0, dw,w, H0, dH,H, samplerate,points1D, points2D, fieldsweep, frequencysweep, T1measure
 	//Analysis NVARs
 	NVAR buffer, baselinestart, baselineend, windowstart, windowend, windowdata, baseline, filter, filterrange, tphase, tphasecorrect
 	NVAR fphase1, fphase2, fphasecorrect, autophase1, scanphase, intreal, intimag,intmag, index, indexparameter, usegyro, gyro
@@ -62,6 +62,8 @@ Function InitExpt(s)
 	STRUCT NMRdata &s
 	
 	SVAR s.filename=root:analysis:system:gfilename
+
+	NVAR s.experimenttype=root:analysis:system:gexperimenttype
 	
 	//Datavariables
 	NVAR s.w0=root:analysis:system:gw0
@@ -172,10 +174,10 @@ Function InitExpt(s)
 	wave s.data=root:$s.filename
 	wave s.statwave=root:analysis:statwaves:$("Stats"+s.filename)	
 
-	s.timewindow="NMRAnalysis#G0"
-	s.fftwindow="NMRAnalysis#G1"
-	s.fftsumintwindow="IntegralFFTSumPanel#G0"
-	s.t1window="T1panel#G0"
+	s.timewindow="ConMatNMRPro#DataTab#G0"
+	s.fftwindow="ConMatNMRPro#DataTab#G1"
+	s.fftsumintwindow="ConMatNMRPro#FFTIntTab#G0"
+	s.t1window="ConMatNMRPro#T1Tab#G0"
 	
 	wave s.tempmr2_0=root:analysis:system:tempmr2_0
 	wave s.tempmr2_1=root:analysis:system:tempmr2_1
